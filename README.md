@@ -12,6 +12,10 @@
 ## 🧊 About the Project
 Pengu Kart is a delightfully cool e-commerce platform designed to make online shopping fun, responsive, and visually engaging. This project was built by **Atul Singh** as a hackathon submission for the **Newton Headstart Conference 2026**. 
 
+## 🧊 The Origin Story Behind Name 'Pengu Kart'
+
+Pengu Kart actually began with a meme. During the kickoff for the **Newton Headstart Conference 2026**, a slide flashed on the screen showing a penguin pulling a cart, followed by a website. It clicked instantly—and Pengu Kart was born!
+
 Rather than writing the code manually from scratch, this entire frontend was architected and generated using **Lovable**. The focus of this project was on **Prompt Engineering**—carefully crafting and refining AI instructions to dictate layout, state management, color theory, and micro-interactions.
 
 ## ✨ Features Achieved via Prompting
