@@ -13,8 +13,8 @@ export type CartItem = Product & { qty: number };
 
 export type FlyPayload = {
   key: number;
-  emoji: string;
-  color: string;
+  product: Product;
+  qty: number;
   from: { x: number; y: number };
 };
 
