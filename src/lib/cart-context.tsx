@@ -29,7 +29,7 @@ type CartCtx = {
   clear: () => void;
   bumpKey: number;
   fly: FlyPayload | null;
-  triggerFly: (p: Product, from: { x: number; y: number }) => void;
+  triggerFly: (p: Product, from: { x: number; y: number }, qty?: number) => void;
   endFly: () => void;
 };
 
