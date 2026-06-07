@@ -46,8 +46,7 @@ export function FlyingToCart() {
             opacity: { duration: 0.95, times: [0, 0.15, 0.85, 1] },
           }}
           onAnimationComplete={() => {
-            // commit add when the parcel "lands" in the cart
-            if (fly.product) add(fly.product, fly.qty ?? 1);
+            add(fly.product, fly.qty);
             endFly();
           }}
           className="absolute left-0 top-0 flex h-16 w-16 items-center justify-center"
