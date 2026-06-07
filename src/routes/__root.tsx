@@ -121,6 +121,7 @@ function RootShell({ children }: { children: ReactNode }) {
 import { CartProvider } from "@/lib/cart-context";
 import { Navbar } from "@/components/Navbar";
 import { CartDrawer } from "@/components/CartDrawer";
+import { FlyingToCart } from "@/components/FlyingToCart";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -131,6 +132,7 @@ function RootComponent() {
         <Navbar />
         <Outlet />
         <CartDrawer />
+        <FlyingToCart />
       </CartProvider>
     </QueryClientProvider>
   );
