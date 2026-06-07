@@ -53,8 +53,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((cur) => cur.flatMap((i) => (i.id === id ? (i.qty > 1 ? [{ ...i, qty: i.qty - 1 }] : []) : [i])));
   const clear = () => setItems([]);
 
-  const triggerFly = useCallback((p: Product, from: { x: number; y: number }) => {
-    setFly({ key: Date.now() + Math.random(), emoji: p.emoji, color: p.color, from });
+  const triggerFly = useCallback((p: Product, from: { x: number; y: number }, qty: number = 1) => {
+    setFly({ key: Date.now() + Math.random(), product: p, qty, from });
   }, []);
   const endFly = useCallback(() => setFly(null), []);
 
