@@ -62,9 +62,9 @@ export function FlyingToCart() {
           </motion.div>
           {/* The parcel */}
           <div
-            className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${fly.color} text-3xl shadow-xl ring-2 ring-white/80`}
+            className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${fly.product.color} text-3xl shadow-xl ring-2 ring-white/80`}
           >
-            <span className="drop-shadow">{fly.emoji}</span>
+            <span className="drop-shadow">{fly.product.emoji}</span>
           </div>
         </motion.div>
       </AnimatePresence>
