@@ -61,7 +61,7 @@ function Home() {
               animate={{ y: [0, -14, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Penguin size={240} />
+              <Penguin size={240} interactive />
             </motion.div>
           </div>
         </div>
