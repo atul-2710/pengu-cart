@@ -3,6 +3,7 @@ import { useCart } from "@/lib/cart-context";
 import { Penguin } from "./Penguin";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatINR } from "@/lib/currency";
 
 export function CartDrawer() {
   const { open, setOpen, items, total, add, remove, clear } = useCart();
@@ -52,7 +53,7 @@ export function CartDrawer() {
                     </div>
                     <div className="flex-1">
                       <p className="font-bold text-[color:var(--ocean)]">{it.title}</p>
-                      <p className="text-xs text-muted-foreground">${it.price}</p>
+                      <p className="text-xs text-muted-foreground">{formatINR(it.price)}</p>
                     </div>
                     <div className="flex items-center gap-1 rounded-full bg-white/70 px-2 py-1">
                       <button
@@ -79,7 +80,7 @@ export function CartDrawer() {
             <div className="glass mt-2 space-y-3 rounded-2xl p-4">
               <div className="flex items-center justify-between text-[color:var(--ocean)]">
                 <span className="font-semibold">Total</span>
-                <span className="text-2xl font-extrabold">${total.toFixed(2)}</span>
+                <span className="text-2xl font-extrabold">{formatINR(total)}</span>
               </div>
               <button className="w-full rounded-2xl bg-primary py-3 font-bold text-primary-foreground shadow-lg shadow-primary/30 transition hover:brightness-110">
                 Checkout

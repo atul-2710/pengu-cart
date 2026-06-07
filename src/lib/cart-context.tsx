@@ -17,7 +17,7 @@ type CartCtx = {
   total: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  add: (p: Product) => void;
+  add: (p: Product, qty?: number) => void;
   remove: (id: string) => void;
   clear: () => void;
   bumpKey: number;
@@ -30,11 +30,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [bumpKey, setBumpKey] = useState(0);
 
-  const add = (p: Product) => {
+  const add = (p: Product, qty: number = 1) => {
     setItems((cur) => {
       const ex = cur.find((i) => i.id === p.id);
-      if (ex) return cur.map((i) => (i.id === p.id ? { ...i, qty: i.qty + 1 } : i));
-      return [...cur, { ...p, qty: 1 }];
+      if (ex) return cur.map((i) => (i.id === p.id ? { ...i, qty: i.qty + qty } : i));
+      return [...cur, { ...p, qty }];
     });
     setBumpKey((k) => k + 1);
   };
