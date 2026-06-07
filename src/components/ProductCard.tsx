@@ -1,24 +1,26 @@
-import { motion } from "framer-motion";
-import { Check, Minus, Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Minus, Plus, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 import { useCart, type Product } from "@/lib/cart-context";
 import { formatINR } from "@/lib/currency";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { triggerFly } = useCart();
+  const { add } = useCart();
   const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
-  const emojiRef = useRef<HTMLDivElement | null>(null);
+  const [status, setStatus] = useState<"idle" | "sliding" | "added">("idle");
 
   const handleAdd = () => {
-    const el = emojiRef.current;
-    if (el) {
-      const r = el.getBoundingClientRect();
-      triggerFly(product, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, qty);
-    }
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1100);
+    if (status !== "idle") return;
+    add(product, qty);
+    setStatus("sliding");
+    setTimeout(() => setStatus("added"), 650);
+    setTimeout(() => setStatus("idle"), 1600);
   };
+
+  const btnBase =
+    "mt-3 relative flex w-full items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold overflow-hidden";
+  const btnIdle = "bg-primary text-primary-foreground hover:brightness-110";
+  const btnAdded = "bg-emerald-500 text-white";
 
   return (
     <motion.div
@@ -26,7 +28,6 @@ export function ProductCard({ product }: { product: Product }) {
       className="glass flex w-full flex-col overflow-hidden rounded-3xl p-3"
     >
       <div
-        ref={emojiRef}
         className={`mb-3 flex aspect-square items-center justify-center rounded-2xl bg-gradient-to-br ${product.color} text-6xl`}
       >
         <span className="drop-shadow-md">{product.emoji}</span>
@@ -58,26 +59,48 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        <motion.button
-          onClick={handleAdd}
-          animate={added ? { scale: [1, 1.08, 1] } : {}}
-          transition={{ duration: 0.4 }}
-          className={`mt-3 flex w-full items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold transition-colors ${
-            added
-              ? "bg-emerald-500 text-white"
-              : "bg-primary text-primary-foreground hover:brightness-110"
-          }`}
-        >
-          {added ? (
-            <>
-              <Check className="h-3.5 w-3.5" /> Added!
-            </>
-          ) : (
-            <>
-              <Plus className="h-3.5 w-3.5" /> Add to Cart
-            </>
-          )}
-        </motion.button>
+        <button onClick={handleAdd} className={`${btnBase} ${status === "added" ? btnAdded : btnIdle}`}>
+          <AnimatePresence mode="wait">
+            {status === "sliding" && (
+              <motion.div
+                key="slide"
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              >
+                <ShoppingCart className="h-4 w-4" />
+              </motion.div>
+            )}
+
+            {status === "idle" && (
+              <motion.span
+                key="idle"
+                className="flex items-center gap-1.5"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Plus className="h-3.5 w-3.5" /> Add to Cart
+              </motion.span>
+            )}
+
+            {status === "added" && (
+              <motion.span
+                key="added"
+                className="flex items-center gap-1.5"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.25 }}
+              >
+                <Check className="h-3.5 w-3.5" /> Added to Cart
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
       </div>
     </motion.div>
   );
