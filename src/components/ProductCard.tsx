@@ -1,16 +1,21 @@
 import { motion } from "framer-motion";
 import { Check, Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart, type Product } from "@/lib/cart-context";
 import { formatINR } from "@/lib/currency";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { add } = useCart();
+  const { triggerFly } = useCart();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const emojiRef = useRef<HTMLDivElement | null>(null);
 
   const handleAdd = () => {
-    add(product, qty);
+    const el = emojiRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      triggerFly(product, { x: r.left + r.width / 2, y: r.top + r.height / 2 }, qty);
+    }
     setAdded(true);
     setTimeout(() => setAdded(false), 1100);
   };
@@ -21,6 +26,7 @@ export function ProductCard({ product }: { product: Product }) {
       className="glass flex w-full flex-col overflow-hidden rounded-3xl p-3"
     >
       <div
+        ref={emojiRef}
         className={`mb-3 flex aspect-square items-center justify-center rounded-2xl bg-gradient-to-br ${product.color} text-6xl`}
       >
         <span className="drop-shadow-md">{product.emoji}</span>

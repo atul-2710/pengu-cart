@@ -46,6 +46,7 @@ export function Navbar() {
         </ul>
 
         <motion.button
+          id="cart-target"
           onClick={() => setOpen(true)}
           animate={bump ? { scale: [1, 1.25, 0.95, 1] } : { scale: 1 }}
           transition={{ duration: 0.45 }}
