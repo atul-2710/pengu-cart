@@ -83,10 +83,15 @@ function Home() {
               key={c.name}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className={`glass cursor-pointer rounded-2xl bg-gradient-to-br ${c.color} p-4 text-center`}
             >
-              <div className="text-4xl">{c.emoji}</div>
-              <div className="mt-2 text-sm font-bold text-[color:var(--ocean)]">{c.name}</div>
+              <Link
+                to="/categories"
+                search={{ category: c.name }}
+                className={`glass block cursor-pointer rounded-2xl bg-gradient-to-br ${c.color} p-4 text-center`}
+              >
+                <div className="text-4xl">{c.emoji}</div>
+                <div className="mt-2 text-sm font-bold text-[color:var(--ocean)]">{c.name}</div>
+              </Link>
             </motion.div>
           ))}
         </div>
